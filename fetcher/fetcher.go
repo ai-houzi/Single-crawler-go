@@ -3,7 +3,6 @@ package fetcher
 import (
 	"bufio"
 	"golang.org/x/net/html/charset"
-	"io"
 	"net/http"
 	"fmt"
 	"io/ioutil"
@@ -14,6 +13,7 @@ import (
 )
 
 func Fetch(url string) ([]byte, error) {
+
 	resp, err := http.Get(url)
 
 	if err != nil {
@@ -25,9 +25,12 @@ func Fetch(url string) ([]byte, error) {
 		return nil,
 			fmt.Errorf("wrong status code :", resp.StatusCode)
 	}
-	e := determineEncoding(resp.Body)
 
-	utf8reader := transform.NewReader(resp.Body, e.NewDecoder())
+	bodyReader := bufio.NewReader(resp.Body)
+
+	e := determineEncoding(bodyReader)
+
+	utf8reader := transform.NewReader(bodyReader, e.NewDecoder())
 
 	return ioutil.ReadAll(utf8reader)
 
@@ -37,11 +40,11 @@ func Fetch(url string) ([]byte, error) {
  * 判定网页内容的编码格式
  *
  */
-func determineEncoding(r io.Reader) encoding.Encoding {
-	bytes, err := bufio.NewReader(r).Peek(1024)
+func determineEncoding(r *bufio.Reader) encoding.Encoding {
+	bytes, err := r.Peek(1024)
 
 	if err != nil {
-		log.Printf("fetcher error: %v" ,err)
+		log.Printf("fetcher error: %v", err)
 		return unicode.UTF8
 	}
 
