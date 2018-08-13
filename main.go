@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Single-crawler-go/engine"
-	"Single-crawler-go/zhenai/parser"
+	"myProject/Single-crawler-go/engine"
+	"myProject/Single-crawler-go/zhenai/parser"
 )
 
 func main() {

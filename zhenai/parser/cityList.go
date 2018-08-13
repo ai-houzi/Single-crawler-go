@@ -1,8 +1,9 @@
 package parser
 
 import (
-	"Single-crawler-go/engine"
+
 	"regexp"
+	"myProject/Single-crawler-go/engine"
 )
 
 const cityListRe = `<a href="(http://www.zhenai.com/zhenghun/[0-9a-z]+)"[^>]*>([^<]+)</a>`
@@ -19,11 +20,11 @@ func ParseCityList(contents []byte) engine.ParseResult {
 
 	for _, m := range matches {
 
-		result.Iterms = append(result.Iterms, string(m[2]))
+		result.Iterms = append(result.Iterms, "city:"+string(m[2]))
 		result.Requsets = append(result.Requsets,
 			engine.Request{
 				Url:        string(m[1]),
-				ParserFunc: engine.NilParse,
+				ParserFunc: ParserCity,
 			})
 	}
 

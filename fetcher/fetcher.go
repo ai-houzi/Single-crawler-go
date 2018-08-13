@@ -2,14 +2,16 @@ package fetcher
 
 import (
 	"bufio"
-	"golang.org/x/net/html/charset"
 	"net/http"
 	"fmt"
 	"io/ioutil"
 	"golang.org/x/text/transform"
+
+	"log"
+
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
-	"log"
+	"golang.org/x/net/html/charset"
 )
 
 func Fetch(url string) ([]byte, error) {
