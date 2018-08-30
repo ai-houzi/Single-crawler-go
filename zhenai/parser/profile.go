@@ -17,10 +17,10 @@ var occupationRe = regexp.MustCompile(`<td><span class="label">职业： </span>
 var xingzuoRe = regexp.MustCompile(`<td><span class="label">星座：</span>([^<]+)</td>`)
 var hokouRe = regexp.MustCompile(`<td><span class="label">籍贯：</span>([^<]+)</td>`)
 
-func ParserProfile(contents []byte) engine.ParseResult {
+func ParserProfile(contents []byte, name string) engine.ParseResult {
 
 	profile := model.Profile{}
-
+	profile.Name = name
 	age, err := strconv.Atoi(extractString(contents, ageRe))
 
 	if err != nil {

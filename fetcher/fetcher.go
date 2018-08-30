@@ -12,10 +12,13 @@ import (
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/net/html/charset"
+	"time"
 )
 
-func Fetch(url string) ([]byte, error) {
+var raterLimiter = time.Tick(100 * time.Millisecond)
 
+func Fetch(url string) ([]byte, error) {
+	<-raterLimiter
 	resp, err := http.Get(url)
 
 	if err != nil {

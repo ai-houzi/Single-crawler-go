@@ -1,7 +1,6 @@
 package parser
 
 import (
-
 	"regexp"
 	"myProject/Single-crawler-go/engine"
 )
