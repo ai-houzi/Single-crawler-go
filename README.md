@@ -1,2 +1,2 @@
 # Single-crawler-go
-go语言单任务版爬虫
+个人练习-go语言爬虫
